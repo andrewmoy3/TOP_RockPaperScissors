@@ -5,7 +5,8 @@ function getComputerChoice(){
     return choices[Math.floor(Math.random()*3)];
 }
 
-function playRound(playerSelection,computerSelection){
+function playRound(playerSelection){
+    let computerSelection = getComputerChoice();
     if(playerSelection == computerSelection){
         console.log(`Tie! You both selected ${playerSelection}`)
         return;
@@ -31,12 +32,13 @@ function playRound(playerSelection,computerSelection){
 function game(){
     let playerScore = 0;
     let computerScore = 0;
-    for(let i=0;i<5;i++){
-        playerSelection = prompt("Choose rock, paper, or scissors").toLowerCase();
-        while(!choices.includes(playerSelection)){
-            playerSelection = prompt("Choose rock, paper, or scissors");
-        }
-        winner = playRound(playerSelection,getComputerChoice());
+    let winner;
+
+    
+}
+
+function checkWinner(winner){
+    if(playerScore < 5 && computerScore < 5){
         if(winner == "Player"){
             playerScore++;
         }else if(winner == "Computer"){
@@ -54,5 +56,12 @@ function game(){
         console.log("Computer wins")
     }
 }
+let buttons = document.querySelectorAll('button');
 
+buttons.forEach(button => {
+    button.addEventSelector("click", e => {
+        console.log("hello")
+        checkWinner(playRound(button.textContent));
+    })
+})
 game()
