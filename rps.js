@@ -29,15 +29,7 @@ function playRound(playerSelection){
     }
 }
 
-function game(){
-    let playerScore = 0;
-    let computerScore = 0;
-    let winner;
-
-    
-}
-
-function checkWinner(winner){
+function checkWinner(winner,playerScore,computerScore){
     if(playerScore < 5 && computerScore < 5){
         if(winner == "Player"){
             playerScore++;
@@ -46,22 +38,36 @@ function checkWinner(winner){
         };
     }
     console.log(`Player Score: ${playerScore}\nComputer Score: ${computerScore}`)
-    if(playerScore>computerScore){
-        console.log("You win")
-    }
-    else if(playerScore == computerScore){
-        console.log("You tied")
-    }
-    else{
-        console.log("Computer wins")
-    }
 }
-let buttons = document.querySelectorAll('button');
 
-buttons.forEach(button => {
-    button.addEventSelector("click", e => {
-        console.log("hello")
-        checkWinner(playRound(button.textContent));
+function game(){
+    let pS = 0
+    let cS = 0
+    let winner;
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(button => {
+        button.addEventListener("click", e => {
+            winner = playRound(button.textContent.toLowerCase());
+            if(pS < 5 && cS < 5){
+                if(winner == "Player"){
+                    pS++;
+                }else if(winner == "Computer"){
+                    cS++;
+                };
+            }
+            console.log(`Player Score: ${pS}\nComputer Score: ${cS}`)                
+            if(pS == 5){
+                const winMessage = document.createElement("div");
+                winMessage.textContent = `Player won the game!`
+                document.querySelector("body").appendChild(winMessage);
+            }else if(cS == 5){
+                const winMessage = document.createElement("div");
+                winMessage.textContent = `Computer won the game!`
+                document.querySelector("body").appendChild(winMessage);
+            }
+        })
     })
-})
+}
+
 game()
+
